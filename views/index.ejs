@@ -29,7 +29,6 @@
                 <a>
                     <span><%= seat.number %></span>
                     <span data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied ' : 'Available' %></span>
-                    <span class="article-list__date"><% seat.createdAt %></span>
                 </a>
             </li>
             <% }) %>

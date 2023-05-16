@@ -244,12 +244,9 @@ img {
 
 .article-ul:hover li {
   font-weight: 300;
-  
-  /* filter: blur(3px); */
 }
 
 .article-ul:hover li:hover {
-  /* filter: none; */
   font-weight: bold;
 }
 
@@ -371,3 +368,5 @@ img {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
+
