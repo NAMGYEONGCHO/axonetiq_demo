@@ -6,16 +6,16 @@
     <section class="articles">
         <h2 class="articles__heading">Seat Status</h2>
         <!-- For testing, display users. by clicking ablt to change current logged-in user -->
-        <ul class="article-ul">
+        <div class="d-flex">
             <% users.forEach((user, index) => { %>
-            <li>
-                <a>
-                    <span class="user" data-id="<%= user._id %>"><%= user.name %></span>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="user card-title" data-id="<%= user._id %>"><%= user.name %></h5>
                     <span id="<%= user._id %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
-                </a>
-            </li>
+                </div>
+            </div>
             <% }) %>
-        </ul>
+        </div>
         <!-- Displays seats that are available for booking. 
         The currently logged in user can only cancel the seats they have booked, and can only book them if they are vacant. 
         If the seat is vacant, it can be booked.    -->

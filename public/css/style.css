@@ -347,4 +347,14 @@ img {
     display: none;
 }
 
-
+.d-flex {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  }
+  
+.card {
+  margin: 1rem;
+  width: 18rem;
+}
+  
