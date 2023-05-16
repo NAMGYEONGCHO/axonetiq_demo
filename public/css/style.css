@@ -243,11 +243,14 @@ img {
 }
 
 .article-ul:hover li {
-  filter: blur(3px);
+  font-weight: 300;
+  
+  /* filter: blur(3px); */
 }
 
 .article-ul:hover li:hover {
-  filter: none;
+  /* filter: none; */
+  font-weight: bold;
 }
 
 

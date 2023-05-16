@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function(){
                               this.classList.add('available');
                               this.textContent = 'Available';
                               this.setAttribute('data-bookedBy', 'none');
-                              
                           }
                       })
                       .catch((error) => {
