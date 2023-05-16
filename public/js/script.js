@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function(){
                       // The seat was successfully booked, update the UI
                       this.classList.remove('available');
                       this.classList.add('occupied');
-                      this.textContent = 'Occupied';
+                      this.querySelector('.seat-status').textContent = 'Occupied';
+
                       this.setAttribute('data-bookedBy', currentUserId);
                   }
               })
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
                               // The booking was successfully cancelled, update the UI
                               this.classList.remove('occupied');
                               this.classList.add('available');
-                              this.textContent = 'Available';
+                              this.querySelector('.seat-status').textContent = 'Available';
                               this.setAttribute('data-bookedBy', 'none');
                           }
                       })

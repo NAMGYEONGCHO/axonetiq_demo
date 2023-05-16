@@ -26,9 +26,9 @@
         <ul class="article-ul">
             <% data.forEach(seat => { %>
             <li>
-                <a>
+                <a data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>">
                     <span><%= seat.number %></span>
-                    <span data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied ' : 'Available' %></span>
+                    <span class="seat-status"><%= seat.status ? 'Occupied ' : 'Available' %></span>
                 </a>
             </li>
             <% }) %>
