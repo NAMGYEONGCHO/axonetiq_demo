@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Seat = require('../models/Seat')
 const User = require('../models/User')
 /**
@@ -21,24 +22,46 @@ router.get('', async (req, res) => {
 
 router.post('/book', async (req, res) => {
     const { seatId, userId, action } = req.body;
+    console.log("data");
+    console.log(seatId);
+    console.log(userId);
+   
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
     try {
-        const seat = await Seat.findById(seatId);
-        
+        const seat = await Seat.findById(seatId).session(session);
+        console.log(seat.bookedBy);
+        //if seat is occipied by others.
+        if (seat.status && (seat.bookedBy !== userId)) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({ success: false, message: 'Seat is already booked.' });
+        }
+
         if(action === 'cancel') {
             // perform cancel operation here
             if(seat.bookedBy === userId) {
                 seat.status = false;
                 seat.bookedBy = null;
+                await seat.save({session});
+                await session.commitTransaction();
+                session.endSession();
+                return res.json({ success: true, message: 'Seat booking cancelled successfully.' });
             }
         } else {
             // perform book operation here
             seat.status = true;
             seat.bookedBy = userId;
+            await seat.save({session});
+            await session.commitTransaction();
+            session.endSession();
+            return res.json({ success: true, message: 'Seat booked successfully.' });
+        
         }
-        await seat.save();
-        res.json({ success: true });
     } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
         console.error(err);
         res.json({ success: false });
     }

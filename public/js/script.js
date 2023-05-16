@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function(){
                       this.classList.remove('available');
                       this.classList.add('occupied');
                       this.textContent = 'Occupied';
+                      this.setAttribute('data-bookedBy', currentUserId);
                   }
               })
               .catch((error) => {
@@ -52,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function(){
                               this.classList.remove('occupied');
                               this.classList.add('available');
                               this.textContent = 'Available';
+                              this.setAttribute('data-bookedBy', 'none');
+                              
                           }
                       })
                       .catch((error) => {

@@ -9,7 +9,7 @@
         <ul class="article-ul">
             <% users.forEach((user, index) => { %>
             <li>
-                <a href="#">
+                <a>
                     <span class="user" data-id="<%= user._id %>"><%= user.name %></span>
                     <span id="<%= user._id %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
                 </a>
@@ -22,7 +22,7 @@
         <ul class="article-ul">
             <% data.forEach(seat => { %>
             <li>
-                <a href="#">
+                <a>
                     <span><%= seat.number %></span>
                     <span data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied '+seat.bookedBy : 'Available' %></span>
                     <span class="article-list__date"><% seat.createdAt %></span>
