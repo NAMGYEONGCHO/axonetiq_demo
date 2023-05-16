@@ -12,7 +12,7 @@ const SeatSchema = new Schema({
     },
     bookedBy:{
         type: String,
-        default: null
+        default: ""
     },
     createdAt: {
         type: Date,

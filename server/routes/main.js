@@ -6,13 +6,19 @@ const User = require('../models/User')
 /**
  * 
  */
+
+
+
 router.get('', async (req, res) => {
 
     try {
         // Get seat data
         const data = await Seat.find();
+        
         // Get user data
         const users = await User.find();
+        
+
         res.render('index', { data, users });
     } catch (error) {
         console.log(error);
@@ -20,11 +26,52 @@ router.get('', async (req, res) => {
     }
 })
 
+async function insertSeatData () {
+    const data = await Seat.find();
+    if(data.length !== 0) return;
+    Seat.insertMany([
+        {
+            number: 1,
+            status: false,
+            bookedBy: null
+        },
+        {
+            number: 2,
+            status: false,
+            bookedBy: null
+        },
+        {
+            number: 3,
+            status: false,
+            bookedBy: null
+        }
+    ])
+}
+
+insertSeatData();
+
+async function insertUserData () {
+    const users = await User.find();
+    if(users.length !== 0) return;
+    User.insertMany([
+        {
+            name: 'john',
+            tel: '23434512'
+        },
+        {
+            name: 'Doe',
+            tel: '11122234'
+        }
+    ])
+}
+
+insertUserData();
+
 router.post('/book', async (req, res) => {
     const { seatId, userId, action } = req.body;
-    console.log("data");
+    /* console.log("data");
     console.log(seatId);
-    console.log(userId);
+    console.log(userId); */
    
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -72,39 +119,8 @@ router.get('/about', (req, res) => {
     res.render('about');
 })
 
+//init tables for the first time
+
+
 module.exports = router;
 
-//init tables for the first time
-/* function insertSeatData () {
-    Seat.insertMany([
-        {
-            number: 1,
-            status: false
-        },
-        {
-            number: 2,
-            status: false
-        },
-        {
-            number: 3,
-            status: false
-        }
-    ])
-}
-
-insertSeatData(); */
-
-/* function insertUserData () {
-    User.insertMany([
-        {
-            name: 'john',
-            tel: '23434512'
-        },
-        {
-            name: 'Doe',
-            tel: '11122234'
-        }
-    ])
-}
-
-insertUserData(); */
