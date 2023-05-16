@@ -22,14 +22,14 @@ List what things you need to install the software and how to install them. For e
 
 A step by step series of examples that tell you how to get a development environment running.
 
+make .env root directory
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.7kzs12y.mongodb.net/Ticket
+  
 Clone the repository:
 
 ```bash
 git clone https://github.com/NAMGYEONGCHO/axonetiq_demo.git
 
 npm install
-
-make .env root directory
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.7kzs12y.mongodb.net/Ticket
 
 npm start 
