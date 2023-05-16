@@ -1,10 +1,12 @@
 <div class="author">
-    <h1 class="author__heading">Hi, I am Raddy.</h1>
-    <p class="author__body">Web developer and content creator</p>
-
-    <img src="/img/hero-image.webp">
+    <h1 class="author__heading">Axonetiq</h1>
+    <p class="author__body">Secure Ticket demo</p>
+    <p class="app-description">An interactive demonstration of a robust ticket booking solution, TicketMaster Demo offers a seamless, user-friendly experience for managing and reserving seats. Featuring an appealing UI and a fail-safe mechanism to prevent overbooking, this demo stands as a testament to a powerful booking solution.</p>
+    
+    <img src="/img/online-ticket-booking.jpg">
     <section class="articles">
-        <h2 class="articles__heading">Seat Status</h2>
+        <h2 class="articles__heading">logged-in User Status</h2>
+        
         <!-- For testing, display users. by clicking ablt to change current logged-in user -->
         <div class="d-flex">
             <% users.forEach((user, index) => { %>
@@ -16,9 +18,11 @@
             </div>
             <% }) %>
         </div>
+        <p class="help-text">Click on a username to switch the logged-in user</p>
         <!-- Displays seats that are available for booking. 
         The currently logged in user can only cancel the seats they have booked, and can only book them if they are vacant. 
         If the seat is vacant, it can be booked.    -->
+        <h2 class="articles__heading">Seat Status</h2>
         <ul class="article-ul">
             <% data.forEach(seat => { %>
             <li>
@@ -30,6 +34,11 @@
             </li>
             <% }) %>
         </ul>
+        <!-- For Booking -->
+        <p class="help-text">To book a seat, simply click on an available seat. It will then be reserved for the currently logged-in user.</p>
+
+        <!-- For Cancellation -->
+        <p class="help-text">To cancel a reservation, click on a seat that you have booked. The seat will become available for other users to reserve.</p>
 
     </section>
 </div>

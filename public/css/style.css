@@ -357,4 +357,14 @@ img {
   margin: 1rem;
   width: 18rem;
 }
-  
+
+.help-text {
+  color: #888; /* replace with any lighter color you prefer */
+}  
+
+.help-text {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}

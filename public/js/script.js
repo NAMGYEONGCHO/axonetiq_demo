@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function(){
                       });
                   }
               } else {
-                  // The seat was booked by another user, do nothing
+                alert("Sorry, this seat has already been booked by another user. Please choose a different seat.");
               }
           }
       });
@@ -76,13 +76,6 @@ document.addEventListener('DOMContentLoaded', function(){
         switchUser(userId);
       });
     }
-    /* for (var i = 0; i < allUsers.length; i++) {
-      allUsers[i].addEventListener('click', function() {
-        const userId = this.dataset.id;  // Get user id
-        switchUser(userId);
-      });
-    } */
-
 });
 
 function switchUser(id) {
