@@ -338,3 +338,11 @@ img {
 .pagination:hover {
   color: var(--black);
 }
+
+.current {
+    display: inline;
+}
+
+.hidden {
+    display: none;
+}
