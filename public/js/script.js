@@ -4,20 +4,64 @@ document.addEventListener('DOMContentLoaded', function(){
   
     for (var i = 0; i < allSeats.length; i++) {
       allSeats[i].addEventListener('click', function() {
-        // If the seat is available
-        if (this.classList.contains('available')) {
-          // Mark the seat as occupied
-          this.classList.remove('available');
-          this.classList.add('occupied');
-          this.textContent = 'Occupied';
-          // TODO: Add your booking logic here
-        } else if (this.classList.contains('occupied')) {
-          // Mark the seat as available
-          this.classList.remove('occupied');
-          this.classList.add('available');
-          this.textContent = 'Available';
-          // TODO: Add your logic here for when a seat is made available again
-        }
+          // Get the current user ID
+          const currentUserId = document.querySelector('.current').id;
+          // Get the seat ID
+          const seatId = this.dataset.id;
+          // Get seat owner ID
+          const bookedBy = this.getAttribute('data-bookedBy');
+          
+          if (this.classList.contains('available')) {
+              // Send a request to the server to book the seat
+              fetch('/book', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ seatId, userId: currentUserId, action: 'book' }),
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      // The seat was successfully booked, update the UI
+                      this.classList.remove('available');
+                      this.classList.add('occupied');
+                      this.textContent = 'Occupied';
+                  }
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+          } else if (this.classList.contains('occupied')) {
+              // Check if the seat was booked by the current user
+              if (bookedBy === currentUserId) {
+                  // Ask the user if they want to cancel their booking
+                  if (confirm('Do you want to cancel your booking?')) {
+                      // Send a request to the server to cancel the booking
+                      fetch('/book', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({ seatId, userId: currentUserId, action: 'cancel' }),
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data.success) {
+                              // The booking was successfully cancelled, update the UI
+                              this.classList.remove('occupied');
+                              this.classList.add('available');
+                              this.textContent = 'Available';
+                          }
+                      })
+                      .catch((error) => {
+                          console.error('Error:', error);
+                      });
+                  }
+              } else {
+                  // The seat was booked by another user, do nothing
+              }
+          }
       });
     }
 
@@ -43,7 +87,7 @@ function switchUser(id) {
   const current = document.querySelector('.current');
 
   // If the clicked user is already the current user, do nothing
-  if (current && current.id === `user-status-${id}`) {
+  if (current && current.id === `${id}`) {
       return;
   }
 
@@ -54,7 +98,7 @@ function switchUser(id) {
   }
 
   // And add 'current' class to the clicked user
-  const userCurrent = document.getElementById(`user-status-${id}`);
+  const userCurrent = document.getElementById(`${id}`);
   userCurrent.classList.remove('hidden');
   userCurrent.classList.add('current');
 }

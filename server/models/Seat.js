@@ -10,6 +10,10 @@ const SeatSchema = new Schema({
         type:Boolean,
         required: true
     },
+    bookedBy:{
+        type: String,
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now

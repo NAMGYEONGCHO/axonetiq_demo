@@ -5,24 +5,26 @@
     <img src="/img/hero-image.webp">
     <section class="articles">
         <h2 class="articles__heading">Seat Status</h2>
-
+        <!-- For testing, display users. by clicking ablt to change current logged-in user -->
         <ul class="article-ul">
             <% users.forEach((user, index) => { %>
             <li>
                 <a href="#">
                     <span class="user" data-id="<%= user._id %>"><%= user.name %></span>
-                    <span id="user-status-<%= user._id %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
+                    <span id="<%= user._id %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
                 </a>
             </li>
             <% }) %>
         </ul>
-
+        <!-- Displays seats that are available for booking. 
+        The currently logged in user can only cancel the seats they have booked, and can only book them if they are vacant. 
+        If the seat is vacant, it can be booked.    -->
         <ul class="article-ul">
             <% data.forEach(seat => { %>
             <li>
                 <a href="#">
                     <span><%= seat.number %></span>
-                    <span class="seat <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied' : 'Available' %></span>
+                    <span data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied '+seat.bookedBy : 'Available' %></span>
                     <span class="article-list__date"><% seat.createdAt %></span>
                 </a>
             </li>

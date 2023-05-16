@@ -10,6 +10,7 @@ const PORT = 3001 || process.env.PORT
 
 connectDB();
 
+app.use(express.json());
 app.use(express.static('public'));
 
 //Templateing Engine

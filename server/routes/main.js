@@ -6,50 +6,52 @@ const User = require('../models/User')
  * 
  */
 router.get('', async (req, res) => {
-    const locals = {
-        title: "ticket book",
-        description: "simple page"
-    }
 
     try {
+        // Get seat data
         const data = await Seat.find();
+        // Get user data
         const users = await User.find();
-        res.render('index', { locals, data, users });
+        res.render('index', { data, users });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred while retrieving data'); // Send an error response
     }
 })
 
+router.post('/book', async (req, res) => {
+    const { seatId, userId, action } = req.body;
 
+    try {
+        const seat = await Seat.findById(seatId);
+        
+        if(action === 'cancel') {
+            // perform cancel operation here
+            if(seat.bookedBy === userId) {
+                seat.status = false;
+                seat.bookedBy = null;
+            }
+        } else {
+            // perform book operation here
+            seat.status = true;
+            seat.bookedBy = userId;
+        }
+        await seat.save();
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false });
+    }
+});
 
-/* app.put('/bookings/:id', (req, res) => {
-    // Get the id from the request parameters
-    const id = req.params.id;
-  
-    // Get the new status from the request body
-    const newStatus = req.body.status;
-  
-    // Connect to MongoDB and update the seat
-    MongoClient.connect(url, function(err, db) {
-      if (err) throw err;
-      var dbo = db.db("mydb");
-      dbo.collection("tickets").updateOne({_id: new ObjectId(id)}, {$set: {status: newStatus}}, function(err, res) {
-        if (err) throw err;
-        console.log("1 document updated");
-        db.close();
-      });
-    });
-  
-    res.send('Seat updated');
-  }); */
-
+//For testing route
 router.get('/about', (req, res) => {
     res.render('about');
 })
 
 module.exports = router;
 
+//init tables for the first time
 /* function insertSeatData () {
     Seat.insertMany([
         {
