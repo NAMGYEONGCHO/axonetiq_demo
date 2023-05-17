@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Seat = require('../models/Seat')
 const User = require('../models/User')
+const Bookings = require('../models/Bookings')
 const { insertSeatData, insertUserData, insertFlightData } = require('../init/initDB'); 
 
 /**
@@ -41,7 +42,7 @@ router.post('/book', async (req, res) => {
     try {
         const seat = await Seat.findById(seatId).session(session);
         //if seat is occipied by others.
-        if (seat.status && (seat.bookedBy !== userId)) {
+        if (seat.status && (seat.bookedBy.toString() !== userId)) {
             await session.abortTransaction();
             session.endSession();
             return res.status(400).json({ success: false, message: 'Seat is already booked.' });
@@ -49,7 +50,7 @@ router.post('/book', async (req, res) => {
 
         if(action === 'cancel') {
             // perform cancel operation here
-            if(seat.bookedBy === userId) {
+            if(seat.bookedBy.toString() === userId) {
                 seat.status = false;
                 seat.bookedBy = null;
                 await seat.save({session});
@@ -62,6 +63,22 @@ router.post('/book', async (req, res) => {
             seat.status = true;
             seat.bookedBy = userId;
             await seat.save({session});
+
+            // Create new booking
+            const bookings = new Bookings({
+                userID: userId,
+                seatID: seatId,
+                flightID: '6465102d13cd7c0b27dd4dcb',
+                bookingTime: new Date(),
+                payment: {
+                    paymentProcessor: 'paymentProcessor_1',
+                    paymentReference: 'paymentReference_1'
+                }
+            });
+            
+            // Save the booking to the database
+            await bookings.save();
+
             await session.commitTransaction();
             session.endSession();
             return res.json({ success: true, message: 'Seat booked successfully.' });
