@@ -17,9 +17,12 @@ router.get('', async (req, res) => {
         
         // Get user data
         const users = await User.find();
-        
+        // Assume you have a specific userID
 
-        res.render('index', { data, users });
+        // Get bookings for a specific user
+        const bookings = await Bookings.find({userID: users[0]._id}).populate('userID').populate('flightID').populate('seatID');
+
+        res.render('index', { data, users, bookings });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred while retrieving data'); // Send an error response

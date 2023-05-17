@@ -14,6 +14,7 @@ const BookingsSchema = new Schema({
     },
     seatID:{
         type: String,
+        ref: 'Seat',
         required: true
     },
     payment: {

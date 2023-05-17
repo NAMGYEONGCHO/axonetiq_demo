@@ -38,6 +38,8 @@
 
         <!-- For Cancellation -->
         <p class="help-text">To cancel a reservation, click on a seat that you have booked. The seat will become available for other users to reserve.</p>
-
+        
+        <!-- include the booked list partial -->
+        <%- include('bookedList.ejs', {bookedSeats: bookings}) %>
     </section>
 </div>

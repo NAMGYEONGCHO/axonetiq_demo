@@ -1,18 +1,29 @@
+<!-- bookedList.ejs -->
 <h2>Booked Tickets</h2>
 <table>
     <thead>
         <tr>
+            <th>Flight Number</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
             <th>Seat Number</th>
             <th>Booked By</th>
             <th>Booking Time</th>
         </tr>
     </thead>
     <tbody>
-        <% bookedSeats.forEach(seat => { %>
+        <% bookedSeats.forEach(booking => { %>
             <tr>
-                <td><%= seat.number %></td>
-                <td><%= seat.bookedBy.name %></td>
-                <td><%= seat.updatedAt %></td>
+                <td data-th="Flight Number"><%= booking.flightID.flightNumber %></td>
+                <td data-th="Origin"><%= booking.flightID.origin %></td>
+                <td data-th="Destination"><%= booking.flightID.destination %></td>
+                <td data-th="Departure Time"><%= new Date(booking.flightID.departureTime).toLocaleDateString('en-US') %> <%= new Date(booking.flightID.departureTime).toLocaleTimeString('en-US') %></td>
+                <td data-th="Arrival Time"><%= new Date(booking.flightID.arrivalTime).toLocaleDateString('en-US') %> <%= new Date(booking.flightID.arrivalTime).toLocaleTimeString('en-US') %></td>
+                <td data-th="Seat Number"><%= booking.seatID.number %></td>
+                <td data-th="Booked By"><%= booking.userID.name %></td>
+                <td data-th="Booking Time"><%= new Date(booking.updatedAt).toLocaleDateString('en-US') %> <%= new Date(booking.updatedAt).toLocaleTimeString('en-US') %></td>
             </tr>
         <% }); %>
     </tbody>
