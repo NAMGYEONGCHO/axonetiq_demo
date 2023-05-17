@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const BookingsSchema = new Schema({
-    UserID: {
+    userID: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    FlightID: {
+    flightID: {
         type: Schema.Types.ObjectId,
         ref: 'Flight',
         required: true
     },
-    SeatID:{
+    seatID:{
         type: String,
         required: true
     },
-    Payment: {
+    payment: {
         paymentProcessor: {
             type: String,
             required: true
@@ -36,4 +36,4 @@ const BookingsSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Booking', BookingsSchema);
+module.exports = mongoose.model('Bookings', BookingsSchema);

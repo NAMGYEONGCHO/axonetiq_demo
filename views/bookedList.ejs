@@ -1,0 +1,19 @@
+<h2>Booked Tickets</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Seat Number</th>
+            <th>Booked By</th>
+            <th>Booking Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% bookedSeats.forEach(seat => { %>
+            <tr>
+                <td><%= seat.number %></td>
+                <td><%= seat.bookedBy.name %></td>
+                <td><%= seat.updatedAt %></td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
