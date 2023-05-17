@@ -69,16 +69,12 @@ insertUserData();
 
 router.post('/book', async (req, res) => {
     const { seatId, userId, action } = req.body;
-    /* console.log("data");
-    console.log(seatId);
-    console.log(userId); */
    
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
         const seat = await Seat.findById(seatId).session(session);
-        console.log(seat.bookedBy);
         //if seat is occipied by others.
         if (seat.status && (seat.bookedBy !== userId)) {
             await session.abortTransaction();

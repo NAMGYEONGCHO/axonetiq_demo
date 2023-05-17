@@ -194,11 +194,13 @@ img {
 
 .article-ul {
   list-style-type: none;
-  padding: 0;
+  padding: 10;
   margin: 0;
   font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .article-list__date {
@@ -226,12 +228,18 @@ img {
   .article-list__date {
     text-align: right;
   }
+
+  .article-ul li {
+    flex-basis: 45%; /* on larger screens, each item takes up approximately half the width */
+  }
 }
 
 .article-ul li {
   font-size: 24px;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: filter 0.1s;
+  flex-basis: 100%; /* on small screens, each item takes up the full width */
+  margin-bottom: 10px;
 }
 
 .article-ul li:not(:last-child) {
@@ -370,3 +378,44 @@ img {
 }
 
 
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button.occupied {
+  background-color: #f44336; /* red color */
+}
+
+.button.occupied:hover {
+  background-color: #da190b; /* darker red when hovered */
+}
+
+.button.occupied:active {
+  background-color: #da190b;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.article-ul.seat-table {
+  width: 75%; /* change this value to suit your needs */
+  margin: 0 auto; /* centers the element */
+}

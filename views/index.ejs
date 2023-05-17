@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="user card-title" style="cursor: pointer;" data-id="<%= user._id %>"><%= user.name %></h5>
-                    <span id="<%= user._id %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
+                    <span id="<%= user._id %>" data-name="<%= user.name %>" class="<%= index === 0 ? 'current' : 'hidden' %>">Current</span>
                 </div>
             </div>
             <% }) %>
@@ -23,12 +23,12 @@
         The currently logged in user can only cancel the seats they have booked, and can only book them if they are vacant. 
         If the seat is vacant, it can be booked.    -->
         <h2 class="articles__heading">Seat Status</h2>
-        <ul class="article-ul">
+        <ul class="article-ul seat-table">
             <% data.forEach(seat => { %>
             <li>
-                <a data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat <%= seat.status ? 'occupied' : 'available' %>">
+                <a>
                     <span><%= seat.number %></span>
-                    <span class="seat-status"><%= seat.status ? 'Occupied ' : 'Available' %></span>
+                    <button data-id="<%= seat._id %>" data-bookedBy="<%= seat.bookedBy ? seat.bookedBy : 'none' %>" class="seat button <%= seat.status ? 'occupied' : 'available' %>"><%= seat.status ? 'Occupied ' : 'Available' %></button>
                 </a>
             </li>
             <% }) %>
