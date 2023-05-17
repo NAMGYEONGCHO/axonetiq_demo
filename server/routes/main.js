@@ -4,12 +4,10 @@ const mongoose = require('mongoose');
 const Seat = require('../models/Seat')
 const User = require('../models/User')
 const { insertSeatData, insertUserData } = require('../init/initDB'); 
+
 /**
- * 
+ * get Data for iniitial page load 
  */
-
-
-
 router.get('', async (req, res) => {
 
     try {
