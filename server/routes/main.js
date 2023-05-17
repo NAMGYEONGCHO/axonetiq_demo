@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Seat = require('../models/Seat')
 const User = require('../models/User')
-const { insertSeatData, insertUserData } = require('../init/initDB'); 
+const { insertSeatData, insertUserData, insertFlightData } = require('../init/initDB'); 
 
 /**
  * get Data for iniitial page load 
@@ -30,6 +30,7 @@ router.get('', async (req, res) => {
  */
 insertSeatData();
 insertUserData();
+insertFlightData ();
 
 router.post('/book', async (req, res) => {
     const { seatId, userId, action } = req.body;
