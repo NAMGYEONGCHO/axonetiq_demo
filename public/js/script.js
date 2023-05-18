@@ -6,6 +6,7 @@ function setupSeatBooking() {
       allSeats[i].addEventListener('click', handleSeatClick);
     }
   
+    // Event handler for seat click events
     function handleSeatClick() {
       const currentUserId = document.querySelector('.current').id;
       const currentUserName = document.querySelector('.current').getAttribute('data-name');
@@ -13,6 +14,7 @@ function setupSeatBooking() {
       const bookedBy = this.getAttribute('data-bookedBy');
   
       if (this.classList.contains('available')) {
+        // Book the seat
         bookSeat(this, currentUserId);
       } else if (this.classList.contains('occupied')) {
         if (bookedBy === currentUserId) {
@@ -25,6 +27,7 @@ function setupSeatBooking() {
       }
     }
   
+    // Function to book a seat
     function bookSeat(seatElement, currentUserId) {
       fetch('/book', {
         method: 'POST',
@@ -44,6 +47,7 @@ function setupSeatBooking() {
         });
     }
   
+    // Function to cancel a booking
     function cancelBooking(seatElement, seatId, currentUserId) {
       fetch('/book', {
         method: 'POST',
@@ -63,6 +67,7 @@ function setupSeatBooking() {
         });
     }
   
+    // Function to update seat UI
     function updateSeatUI(seatElement, className, textContent, bookedBy) {
       seatElement.classList.remove('available', 'occupied');
       seatElement.classList.add(className);
@@ -83,6 +88,7 @@ function setupSeatBooking() {
       allUsers[i].addEventListener('click', handleUserClick);
     }
   
+    // Event handler for user click events
     function handleUserClick() {
       const userId = this.dataset.id;
       switchUser(userId);

@@ -17,6 +17,10 @@ const BookingsSchema = new Schema({
         ref: 'Seat',
         required: true
     },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     payment: {
         paymentProcessor: {
             type: String,
