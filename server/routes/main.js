@@ -20,12 +20,24 @@ router.get('', async (req, res) => {
         // Assume you have a specific userID
 
         // Get bookings for a specific user
-        const bookings = await Bookings.find({userID: users[0]._id}).populate('userID').populate('flightID').populate('seatID');
+        const bookings = await Bookings.find({isActive: true}).populate('userID').populate('flightID').populate('seatID');
 
         res.render('index', { data, users, bookings });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred while retrieving data'); // Send an error response
+    }
+})
+
+// ticket-booking\server\routes\main.js
+router.get('/bookings', async (req, res) => {
+    try {
+        // Get bookings for a specific user
+        const bookings = await Bookings.find({isActive: true}).populate('userID').populate('flightID').populate('seatID');
+        res.json({ bookings });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('An error occurred while retrieving bookings'); // Send an error response
     }
 })
 
@@ -57,6 +69,14 @@ router.post('/book', async (req, res) => {
                 seat.status = false;
                 seat.bookedBy = null;
                 await seat.save({session});
+                
+                // Find the booking and deactivate it
+                const booking = await Bookings.findOne({ seatID: seatId, userID: userId }).session(session);
+                if (booking) {
+                    booking.isActive = false;
+                    await booking.save({session});
+                }
+
                 await session.commitTransaction();
                 session.endSession();
                 return res.json({ success: true, message: 'Seat booking cancelled successfully.' });
@@ -72,6 +92,7 @@ router.post('/book', async (req, res) => {
                 userID: userId,
                 seatID: seatId,
                 flightID: '6465102d13cd7c0b27dd4dcb',
+                isActive: true,
                 bookingTime: new Date(),
                 payment: {
                     paymentProcessor: 'paymentProcessor_1',

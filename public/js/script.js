@@ -40,6 +40,7 @@ function setupSeatBooking() {
         .then(data => {
           if (data.success) {
             updateSeatUI(seatElement, 'occupied', 'Occupied', currentUserId);
+            updateBookingsList();
           }
         })
         .catch((error) => {
@@ -60,6 +61,7 @@ function setupSeatBooking() {
         .then(data => {
           if (data.success) {
             updateSeatUI(seatElement, 'available', 'Available', 'none');
+            updateBookingsList();
           }
         })
         .catch((error) => {
@@ -78,6 +80,35 @@ function setupSeatBooking() {
     function displaySeatAlreadyBookedMessage() {
       alert("Sorry, this seat has already been booked by another user. Please choose a different seat.");
     }
+  }
+
+  // Function to update the bookings list
+  function updateBookingsList() {
+    fetch('/bookings')
+      .then(response => response.json())
+      .then(data => {
+        renderBookingsList(data.bookings);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+  // Function to render the bookings list
+  function renderBookingsList(bookings) {
+    const bookingsTableBody = document.querySelector('.bookings-table tbody');
+    bookingsTableBody.innerHTML = bookings.map(booking => `
+      <tr>
+        <td>${booking.flightID.flightNumber}</td>
+        <td>${booking.flightID.origin}</td>
+        <td>${booking.flightID.destination}</td>
+        <td>${new Date(booking.flightID.departureTime).toLocaleDateString('en-US')} ${new Date(booking.flightID.departureTime).toLocaleTimeString('en-US')}</td>
+        <td>${new Date(booking.flightID.arrivalTime).toLocaleDateString('en-US')} ${new Date(booking.flightID.arrivalTime).toLocaleTimeString('en-US')}</td>
+        <td>${booking.seatID.number}</td>
+        <td>${booking.userID.name}</td>
+        <td>${new Date(booking.updatedAt).toLocaleDateString('en-US')} ${new Date(booking.updatedAt).toLocaleTimeString('en-US')}</td>
+      </tr>
+    `).join('');
   }
   
   // Module for user switching functionality
