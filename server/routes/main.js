@@ -69,9 +69,13 @@ router.post('/book', async (req, res) => {
                 seat.status = false;
                 seat.bookedBy = null;
                 await seat.save({session});
-                
+
                 // Find the booking and deactivate it
-                const booking = await Bookings.findOne({ seatID: seatId, userID: userId }).session(session);
+                const booking = await Bookings
+                    .findOne({ seatID: seatId, userID: userId, isActive: true })
+                    .sort({createdAt: 'desc'})
+                    .session(session);
+                
                 if (booking) {
                     booking.isActive = false;
                     await booking.save({session});
@@ -91,7 +95,7 @@ router.post('/book', async (req, res) => {
             const bookings = new Bookings({
                 userID: userId,
                 seatID: seatId,
-                flightID: '6465102d13cd7c0b27dd4dcb',
+                flightID: '6465102d13cd7c0b27dd4dcb',// at the moment, assuming we have only one air plane. reason for hard coded
                 isActive: true,
                 bookingTime: new Date(),
                 payment: {
